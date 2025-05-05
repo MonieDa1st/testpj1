@@ -42,11 +42,6 @@ async function getConfig() {
   }
 }
 
-// Khởi tạo Express server
-const app = express();
-app.use(express.json());
-app.use(cors()); // Cho phép CORS để frontend trên S3 gọi API
-
 let db; // Biến toàn cục để tái sử dụng kết nối
 (async () => {
     try {
