@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e11555ef.css",
+    "main.js": "/static/js/main.f8f0e9bc.js",
+    "static/media/furfly.png": "/static/media/furfly.45a339a7a689952b2295.png",
+    "index.html": "/index.html",
+    "main.e11555ef.css.map": "/static/css/main.e11555ef.css.map",
+    "main.f8f0e9bc.js.map": "/static/js/main.f8f0e9bc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e11555ef.css",
+    "static/js/main.f8f0e9bc.js"
+  ]
+}
