@@ -10,7 +10,7 @@ app.use(express.json());
 
 // Khởi tạo AWS SSM để truy cập Parameter Store
 const ssm = new AWS.SSM({
-    region: 'us-east-1' // Thay bằng region của bạn
+    region: 'ap-southeast-1' // Thay bằng region của bạn
 });
 
 // Hàm lấy thông tin kết nối từ Parameter Store
