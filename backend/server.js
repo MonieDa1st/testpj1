@@ -48,11 +48,6 @@ let db; // Biến toàn cục để tái sử dụng kết nối
 (async () => {
     try {
         const dbConfig = await getDbConfig();
-
-        if (!config.host || !config.port) {
-          throw new Error('Cấu hình DB không đầy đủ. Kiểm tra Parameter Store.');
-        }    
-        
         db = mysql.createConnection({
             host: dbConfig.host,
             port: parseInt(dbConfig.port),
