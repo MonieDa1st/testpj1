@@ -25,20 +25,34 @@ async function getDbConfig() {
         ],
         WithDecryption: true
     };
-    const response = await ssm.getParameters(params).promise();
+    const response = await ssmClient.send(command);
     const config = {};
     response.Parameters.forEach(param => {
-        const key = param.Name.split('/').pop();
-        config[key] = param.Value;
+      const key = param.Name.split('/').pop();
+      config[key] = param.Value;
     });
+    console.log('Đã lấy cấu hình từ Parameter Store:', config);
     return config;
+  } catch (err) {
+    console.error('Lỗi khi lấy tham số từ Parameter Store:', err);
+    throw err;
+  }
 }
 
-// Khởi tạo kết nối MySQL
-let db;
+// Khởi tạo Express server
+const app = express();
+app.use(express.json());
+app.use(cors()); // Cho phép CORS để frontend trên S3 gọi API
+
+let db; // Biến toàn cục để tái sử dụng kết nối
 (async () => {
     try {
         const dbConfig = await getDbConfig();
+
+        if (!config.host || !config.port) {
+          throw new Error('Cấu hình DB không đầy đủ. Kiểm tra Parameter Store.');
+        }    
+        
         db = mysql.createConnection({
             host: dbConfig.host,
             port: parseInt(dbConfig.port),
