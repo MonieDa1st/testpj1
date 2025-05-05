@@ -15,8 +15,8 @@ const ssm = new AWS.SSM({
 
 // Hàm lấy thông tin kết nối từ Parameter Store
 async function getDbConfig() {
-  try {
-    const command = new GetParametersCommand({
+   try {
+    const params = {
       Names: [
         '/webblog/db/host',
         '/webblog/db/port',
@@ -27,8 +27,8 @@ async function getDbConfig() {
         '/webblog/login/password'
       ],
       WithDecryption: true
-    });
-    const response = await ssmClient.send(command);
+    };
+    const response = await ssm.getParameters(params).promise();
     const config = {};
     response.Parameters.forEach(param => {
       const key = param.Name.split('/').pop();
