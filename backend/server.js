@@ -15,29 +15,36 @@ const ssm = new AWS.SSM({
 
 // Hàm lấy thông tin kết nối từ Parameter Store
 async function getDbConfig() {
+  try {
     const params = {
-        Names: [
-            '/webblog/db/host',
-            '/webblog/db/port',
-            '/webblog/db/user',
-            '/webblog/db/password',
-            '/webblog/db/database'
-        ],
-        WithDecryption: true
+      Names: [
+        '/webblog/db/host',
+        '/webblog/db/port',
+        '/webblog/db/user',
+        '/webblog/db/password',
+        '/webblog/db/database'
+      ],
+      WithDecryption: true
     };
+
+    const command = new GetParametersCommand(params); // 👈 đảm bảo có dòng này nếu dùng AWS SDK v3
     const response = await ssmClient.send(command);
+
     const config = {};
     response.Parameters.forEach(param => {
       const key = param.Name.split('/').pop();
       config[key] = param.Value;
     });
+
     console.log('Đã lấy cấu hình từ Parameter Store:', config);
     return config;
+
   } catch (err) {
     console.error('Lỗi khi lấy tham số từ Parameter Store:', err);
     throw err;
   }
 }
+
 
 // Khởi tạo Express server
 const app = express();
