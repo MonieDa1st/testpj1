@@ -14,7 +14,7 @@ const ssm = new AWS.SSM({
 });
 
 // Hàm lấy thông tin kết nối từ Parameter Store
-async function getConfig() {
+async function getDbConfig() {
   try {
     const command = new GetParametersCommand({
       Names: [
